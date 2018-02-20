@@ -16,15 +16,18 @@ function busProduct(name, filepath){
   busProduct.allProducts.push(this);
 }
 busProduct.allProducts = [];
+
 function randomProduct(){
   makeProduct = Math.floor(Math.random() * busProduct.allProducts.length);
   displayThree.push(busProduct.allProducts[makeProduct]);
 }
 function displayCurrent(){
+
   randomProduct();
   busImage1.src = displayThree[0].filepath;
   busImage1.alt = displayThree[0].name;
   busImage1.title = displayThree[0].name;
+
   randomProduct();
   busImage2.src = displayThree[1].filepath;
   busImage2.alt = displayThree[1].name;
