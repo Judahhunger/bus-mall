@@ -1,50 +1,80 @@
 'use strict';
 
 // var totalClicks = 0;
-var displayThree = [];
-var makeProduct = 0;
-var busImage1 = document.getElementById('product-1');
-var busImage2 = document.getElementById('product-2');
-var busImage3 = document.getElementById('product-3');
-var displayImg = document.getElementById('display');
-
-function busProduct(name, filepath){
+BusProduct.displayArray = [];//array to keep track of what's getting displayed.
+BusProduct.allProducts = [];//array of all instances for products.
+BusProduct.totalCounter = 0;
+BusProduct.images = [document.getElementById('product-1'), document.getElementById('product-2'), document.getElementById('product-3')]; //array for 3 displayed images.
+BusProduct.ulContainer = document.getElementById('display');
+//constructor of BusMall products.
+function BusProduct(name, filepath){
   this.name = name;
   this.filepath = filepath;
   this.clicks = 0;
   this.shown = 0;
-  busProduct.allProducts.push(this);
-}
-busProduct.allProducts = [];
-
-function randomProduct(){
-  makeProduct = Math.floor(Math.random() * busProduct.allProducts.length);
-  displayThree.push(busProduct.allProducts[makeProduct]);
-}
-function displayCurrent(){
-
-  randomProduct();
-  busImage1.src = displayThree[0].filepath;
-  busImage1.alt = displayThree[0].name;
-  busImage1.title = displayThree[0].name;
-
-  randomProduct();
-  busImage2.src = displayThree[1].filepath;
-  busImage2.alt = displayThree[1].name;
-  busImage2.title = displayThree[1].name;
-  randomProduct();
-  busImage3.src = displayThree[2].filepath;
-  busImage3.alt = displayThree[2].name;
-  busImage3.title = displayThree[2].name;
+  BusProduct.allProducts.push(this);
 }
 
-new busProduct('bag', 'img/bag.jpg');
-new busProduct('banana', 'img/banana.jpg');
-new busProduct('bathroom', 'img/bathroom.jpg');
-new busProduct('boots', 'img/boots.jpg');
-new busProduct('breakfast', 'img/breakfast.jpg');
-new busProduct('bubblegum', 'img/bubblegum.jpg');
+//making random number based on the length of allProducts array.
+function makeRandomImg(){
+  return Math.floor(Math.random() * BusProduct.allProducts.length);
+}
+
+function displayImg(){
+  while(BusProduct.displayArray.length < 6){
+    var randomIndex = makeRandomImg();
+    while(!BusProduct.displayArray.includes(randomIndex)){
+      BusProduct.displayArray.push(randomIndex);
+    }
+  }
+  for(var i = 0; i < BusProduct.images.length; i++){
+    var holderImg = BusProduct.displayArray.shift();
+    BusProduct.images[i].src = BusProduct.allProducts[holderImg].filepath;
+    BusProduct.images[i].alt = BusProduct.allProducts[holderImg].name;
+    BusProduct.images[i].title = BusProduct.allProducts[holderImg].name;
+    BusProduct.allProducts[holderImg].shown +=1;
+  }
+}
+
+function clickHandler(event){
+  if(event.target === BusProduct.ulContainer){
+    return alert('Please click on a product');
+  }
+  if(BusProduct.totalCounter > 24){
+    BusProduct.ulContainer.removeEventListener('click', clickHandler);
+    BusProduct.ulContainer.style.display = 'none';
+
+  }
+  BusProduct.totalCounter += 1;
+  for(var i = 0; i < BusProduct.allProducts.length; i++){
+    if(event.target.alt === BusProduct.allProducts[i].name){
+      BusProduct.allProducts[i].clicks += 1;
+    }
+  }
+  displayImg();
+}
+
+new BusProduct('bag', 'img/bag.jpg');
+new BusProduct('banana', 'img/banana.jpg');
+new BusProduct('bathroom', 'img/bathroom.jpg');
+new BusProduct('boots', 'img/boots.jpg');
+new BusProduct('breakfast', 'img/breakfast.jpg');
+new BusProduct('bubblegum', 'img/bubblegum.jpg');
+new BusProduct('chair', 'img/chair.jpg');
+new BusProduct('cthulhu', 'img/cthulhu.jpg');
+new BusProduct('dog-duck', 'img/dog-duck.jpg');
+new BusProduct('dragon', 'img/dragon.jpg');
+new BusProduct('pen', 'img/pen.jpg');
+new BusProduct('pet-sweep', 'img/pet-sweep.jpg');
+new BusProduct('scissors', 'img/scissors.jpg');
+new BusProduct('shark', 'img/shark.jpg');
+new BusProduct('sweep', 'img/sweep.png');
+new BusProduct('tauntaun', 'img/tauntaun.jpg');
+new BusProduct('unicorn', 'img/unicorn.jpg');
+new BusProduct('usb', 'img/usb.gif');
+new BusProduct('water-can', 'img/water-can.jpg');
+new BusProduct('wine-glass', 'img/wine-glass.jpg');
 
 // randomProduct();
-displayCurrent();
-displayImg.addEventListener('click', displayCurrent);
+displayImg();
+BusProduct.ulContainer.addEventListener('click', clickHandler);
