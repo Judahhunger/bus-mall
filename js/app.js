@@ -129,3 +129,16 @@ function drawChart(){
     }
   });
 }
+
+//check Local Storage and see if data is there and if not make new array of data.
+function storeLocal(){
+  for(var i = 0; i < BusProduct.allProducts.length; i++)
+    var allProductsArrayStr = JSON.stringify(BusProduct.allProducts);
+  localStorage.setItem('busProductLS', allProductsArrayStr);
+}
+function retrieveLocal(){
+  var localProduct = JSON.parse(localStorage.getItem('busProductLS'));
+  for(var i = 0; i < BusProduct.allProducts.length; i++){
+  if()
+}
+retrieveLocal();
