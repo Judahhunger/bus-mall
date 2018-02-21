@@ -40,10 +40,10 @@ function clickHandler(event){
   if(event.target === BusProduct.ulContainer){
     return alert('Please click on a product');
   }
-  if(BusProduct.totalCounter > 10){
+  if(BusProduct.totalCounter > 24){
     BusProduct.ulContainer.removeEventListener('click', clickHandler);
     BusProduct.ulContainer.style.display = 'none';
-
+    populateChartArrays();
   }
   BusProduct.totalCounter += 1;
   for(var i = 0; i < BusProduct.allProducts.length; i++){
@@ -82,11 +82,13 @@ BusProduct.ulContainer.addEventListener('click', clickHandler);
 var clickArray = [];
 var labelArray = [];
 
-for(var i = 0; i < BusProduct.allProducts.length; i++){
-  clickArray[i] = BusProduct.allProducts[i].clicks;
-  labelArray[i] = BusProduct.allProducts[i].name;
-
+function populateChartArrays(){
+  for(var i = 0; i < BusProduct.allProducts.length; i++){
+    clickArray[i] = BusProduct.allProducts[i].clicks;
+    labelArray[i] = BusProduct.allProducts[i].name;
+  }
 }
+
 var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
   type: 'bar',
