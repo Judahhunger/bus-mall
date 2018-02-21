@@ -78,7 +78,11 @@ new BusProduct('wine-glass', 'img/wine-glass.jpg');
 // randomProduct();
 displayImg();
 BusProduct.ulContainer.addEventListener('click', clickHandler);
+function make
+for(var i = 0; i < BusProduct.allProducts.length; i++){
+  var clickArray = [];
 
+}
 var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
   type: 'bar',
