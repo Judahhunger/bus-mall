@@ -43,8 +43,10 @@ function clickHandler(event){
   if(BusProduct.totalCounter > 24){
     BusProduct.ulContainer.removeEventListener('click', clickHandler);
     BusProduct.ulContainer.style.display = 'none';
+
     populateChartArrays();
     drawChart();
+    // retrieveLocal();
   }
   BusProduct.totalCounter += 1;
   for(var i = 0; i < BusProduct.allProducts.length; i++){
@@ -129,16 +131,42 @@ function drawChart(){
     }
   });
 }
-
 //check Local Storage and see if data is there and if not make new array of data.
 function storeLocal(){
-  for(var i = 0; i < BusProduct.allProducts.length; i++)
-    var allProductsArrayStr = JSON.stringify(BusProduct.allProducts);
-  localStorage.setItem('busProductLS', allProductsArrayStr);
+  localStorage.setItem('busProductLS', JSON.stringify(BusProduct.allProducts));
 }
-function retrieveLocal(){
-  var localProduct = JSON.parse(localStorage.getItem('busProductLS'));
-  for(var i = 0; i < BusProduct.allProducts.length; i++){
-  if()
+if(localStorage.allProducts){
+  checkSavedArray();
+  storeLocal();
 }
-retrieveLocal();
+
+function updateToAllProducts(){
+  BusProduct.allProducts = JSON.parse(localStorage.getItem('busProductLS'));
+  for(var i = 0; i < BusProduct.allProducts.length; i ++){
+    
+  }
+}
+
+function checkSavedArray(){
+  var retrieve = JSON.parse(localStorage.getItem('busProductLS'));
+  BusProduct.allProducts['clicks'] = retrieve.clicks;
+  BusProduct.allProducts['shown'] = retrieve.shown;
+}
+
+// function retrieveLocal(){
+//   if(localStorage !== null){
+//     localProduct = JSON.parse(localStorage.getItem('busProductLS'));
+//     console.log(localProduct);
+//     for(var i = 0; i < BusProduct.allProducts.length; i++){
+//       if(BusProduct.allProducts[i].name === localProduct[i].name){
+//         BusProduct.allProducts[i].clicks += localProduct[i].clicks;
+//         BusProduct.allProducts[i].shown += localProduct[i].shown;
+//         var allProductsArrayStr = JSON.stringify(BusProduct.allProducts);
+//         localStorage.setItem('busProductLS', allProductsArrayStr);
+//       }
+//     }
+//   }
+//   else{
+//     storeLocal();
+//   }
+// }
