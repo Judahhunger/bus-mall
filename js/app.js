@@ -3,27 +3,27 @@
 // var totalClicks = 0;
 BusProduct.displayArray = [];//array to keep track of what's getting displayed.
 BusProduct.allProducts = [];//array of all instances for products.
-BusProduct.totalCounter = 0;
+BusProduct.totalCounter = 0; // tracks each time something is clicked.
 BusProduct.images = [document.getElementById('product-1'), document.getElementById('product-2'), document.getElementById('product-3')]; //array for 3 displayed images.
 BusProduct.ulContainer = document.getElementById('display');
 //constructor of BusMall products.
 function BusProduct(name, filepath){
   this.name = name;
-  this.filepath = filepath;
-  this.clicks = 0;
-  this.shown = 0;
-  BusProduct.allProducts.push(this);
+  this.filepath = filepath;//pulling the img from folder it's located in
+  this.clicks = 0;// tracks each time that instance/img is clicked on.
+  this.shown = 0;// tracks how many times the instance/img is shown, even if not clicked on.
+  BusProduct.allProducts.push(this);//pushes all instances and properties into the array of all instances
 }
 
 //making random number based on the length of allProducts array.
 function makeRandomImg(){
   return Math.floor(Math.random() * BusProduct.allProducts.length);
 }
-
+// function to display img from an array that we'll use to compare if an img in the array is there or not.
 function displayImg(){
-  while(BusProduct.displayArray.length < 6){
-    var randomIndex = makeRandomImg();
-    while(!BusProduct.displayArray.includes(randomIndex)){
+  while(BusProduct.displayArray.length < 6){//if the array has less then 6 items grab an item
+    var randomIndex = makeRandomImg();//makes a number by calling function and uses one of those numbers
+    while(!BusProduct.displayArray.includes(randomIndex)){//check to see if current image is currently in the array to be used and if not push it to array to be used.
       BusProduct.displayArray.push(randomIndex);
     }
   }
@@ -37,7 +37,9 @@ function displayImg(){
 }
 
 function clickHandler(event){
+  BusProduct.totalCounter += 1;
   if(event.target === BusProduct.ulContainer){
+    BusProduct.totalCounter -= 1;
     return alert('Please click on a product');
   }
   if(BusProduct.totalCounter > 24){
@@ -48,7 +50,6 @@ function clickHandler(event){
     drawChart();
     // retrieveLocal();
   }
-  BusProduct.totalCounter += 1;
   for(var i = 0; i < BusProduct.allProducts.length; i++){
     if(event.target.alt === BusProduct.allProducts[i].name){
       BusProduct.allProducts[i].clicks += 1;
@@ -143,7 +144,7 @@ if(localStorage.allProducts){
 function updateToAllProducts(){
   BusProduct.allProducts = JSON.parse(localStorage.getItem('busProductLS'));
   for(var i = 0; i < BusProduct.allProducts.length; i ++){
-    
+
   }
 }
 
