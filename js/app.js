@@ -23,19 +23,19 @@ function makeRandomImg(){
 function displayImg(){
   while(BusProduct.displayArray.length < 6){//if the array has less then 6 items grab an item
     var randomIndex = makeRandomImg();//makes a number by calling function and uses one of those numbers
-    while(!BusProduct.displayArray.includes(randomIndex)){//check to see if current image is currently in the array to be used and if not push it to array to be used.
-      BusProduct.displayArray.push(randomIndex);
+    while(!BusProduct.displayArray.includes(randomIndex)){//check to see if current image is currently in the array to be used and if not
+      BusProduct.displayArray.push(randomIndex);// push it to array to be used.
     }
   }
-  for(var i = 0; i < BusProduct.images.length; i++){
-    var holderImg = BusProduct.displayArray.shift();
-    BusProduct.images[i].src = BusProduct.allProducts[holderImg].filepath;
+  for(var i = 0; i < BusProduct.images.length; i++){//going through the array of images getting added through dom to index.html
+    var holderImg = BusProduct.displayArray.shift();//taking out the first image display array and cutting from array and useing it.
+    BusProduct.images[i].src = BusProduct.allProducts[holderImg].filepath;//going through and for each element in images array displaying it.
     BusProduct.images[i].alt = BusProduct.allProducts[holderImg].name;
     BusProduct.images[i].title = BusProduct.allProducts[holderImg].name;
-    BusProduct.allProducts[holderImg].shown +=1;
+    BusProduct.allProducts[holderImg].shown +=1;//anytime that image is shown it will increment up by 1 for that image.
   }
 }
-
+//event handler so on click will do something. 
 function clickHandler(event){
   BusProduct.totalCounter += 1;
   if(event.target === BusProduct.ulContainer){
