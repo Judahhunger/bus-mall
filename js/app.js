@@ -35,9 +35,10 @@ function displayImg(){
     BusProduct.allProducts[holderImg].shown +=1;//anytime that image is shown it will increment up by 1 for that image.
   }
 }
-//event handler so on click will do something. 
+//event handler so on click will do something.
 function clickHandler(event){
-  BusProduct.totalCounter += 1;
+  displayImg();
+  BusProduct.totalCounter += 1;//adds to total clicks
   if(event.target === BusProduct.ulContainer){
     BusProduct.totalCounter -= 1;
     return alert('Please click on a product');
@@ -45,43 +46,16 @@ function clickHandler(event){
   if(BusProduct.totalCounter > 24){
     BusProduct.ulContainer.removeEventListener('click', clickHandler);
     BusProduct.ulContainer.style.display = 'none';
-
     populateChartArrays();
     drawChart();
-    // retrieveLocal();
+    storeLocal();
   }
   for(var i = 0; i < BusProduct.allProducts.length; i++){
     if(event.target.alt === BusProduct.allProducts[i].name){
-      BusProduct.allProducts[i].clicks += 1;
+      BusProduct.allProducts[i].clicks += 1;//adds when pic is clicked on
     }
   }
-  displayImg();
 }
-
-new BusProduct('bag', 'img/bag.jpg');
-new BusProduct('banana', 'img/banana.jpg');
-new BusProduct('bathroom', 'img/bathroom.jpg');
-new BusProduct('boots', 'img/boots.jpg');
-new BusProduct('breakfast', 'img/breakfast.jpg');
-new BusProduct('bubblegum', 'img/bubblegum.jpg');
-new BusProduct('chair', 'img/chair.jpg');
-new BusProduct('cthulhu', 'img/cthulhu.jpg');
-new BusProduct('dog-duck', 'img/dog-duck.jpg');
-new BusProduct('dragon', 'img/dragon.jpg');
-new BusProduct('pen', 'img/pen.jpg');
-new BusProduct('pet-sweep', 'img/pet-sweep.jpg');
-new BusProduct('scissors', 'img/scissors.jpg');
-new BusProduct('shark', 'img/shark.jpg');
-new BusProduct('sweep', 'img/sweep.png');
-new BusProduct('tauntaun', 'img/tauntaun.jpg');
-new BusProduct('unicorn', 'img/unicorn.jpg');
-new BusProduct('usb', 'img/usb.gif');
-new BusProduct('water-can', 'img/water-can.jpg');
-new BusProduct('wine-glass', 'img/wine-glass.jpg');
-
-// randomProduct();
-displayImg();
-BusProduct.ulContainer.addEventListener('click', clickHandler);
 
 var clickArray = [];
 var labelArray = [];
@@ -136,38 +110,36 @@ function drawChart(){
 function storeLocal(){
   localStorage.setItem('busProductLS', JSON.stringify(BusProduct.allProducts));
 }
-if(localStorage.allProducts){
-  checkSavedArray();
-  storeLocal();
-}
 
-function updateToAllProducts(){
-  BusProduct.allProducts = JSON.parse(localStorage.getItem('busProductLS'));
-  for(var i = 0; i < BusProduct.allProducts.length; i ++){
+function updateToAllProducts(){//checks Local storage and if no LS then makes the new array of instances.
+  if(localStorage.busProductLS){
+    var allProducts = JSON.parse(localStorage.getItem('busProductLS'));
+    BusProduct.allProducts = allProducts;
+  }
+  else{
+    new BusProduct('bag', 'img/bag.jpg');
+    new BusProduct('banana', 'img/banana.jpg');
+    new BusProduct('bathroom', 'img/bathroom.jpg');
+    new BusProduct('boots', 'img/boots.jpg');
+    new BusProduct('breakfast', 'img/breakfast.jpg');
+    new BusProduct('bubblegum', 'img/bubblegum.jpg');
+    new BusProduct('chair', 'img/chair.jpg');
+    new BusProduct('cthulhu', 'img/cthulhu.jpg');
+    new BusProduct('dog-duck', 'img/dog-duck.jpg');
+    new BusProduct('dragon', 'img/dragon.jpg');
+    new BusProduct('pen', 'img/pen.jpg');
+    new BusProduct('pet-sweep', 'img/pet-sweep.jpg');
+    new BusProduct('scissors', 'img/scissors.jpg');
+    new BusProduct('shark', 'img/shark.jpg');
+    new BusProduct('sweep', 'img/sweep.png');
+    new BusProduct('tauntaun', 'img/tauntaun.jpg');
+    new BusProduct('unicorn', 'img/unicorn.jpg');
+    new BusProduct('usb', 'img/usb.gif');
+    new BusProduct('water-can', 'img/water-can.jpg');
+    new BusProduct('wine-glass', 'img/wine-glass.jpg');
 
   }
 }
-
-function checkSavedArray(){
-  var retrieve = JSON.parse(localStorage.getItem('busProductLS'));
-  BusProduct.allProducts['clicks'] = retrieve.clicks;
-  BusProduct.allProducts['shown'] = retrieve.shown;
-}
-
-// function retrieveLocal(){
-//   if(localStorage !== null){
-//     localProduct = JSON.parse(localStorage.getItem('busProductLS'));
-//     console.log(localProduct);
-//     for(var i = 0; i < BusProduct.allProducts.length; i++){
-//       if(BusProduct.allProducts[i].name === localProduct[i].name){
-//         BusProduct.allProducts[i].clicks += localProduct[i].clicks;
-//         BusProduct.allProducts[i].shown += localProduct[i].shown;
-//         var allProductsArrayStr = JSON.stringify(BusProduct.allProducts);
-//         localStorage.setItem('busProductLS', allProductsArrayStr);
-//       }
-//     }
-//   }
-//   else{
-//     storeLocal();
-//   }
-// }
+updateToAllProducts();//function to check LS and use or make instances
+displayImg();//function to make first 3 images on load.
+BusProduct.ulContainer.addEventListener('click', clickHandler);
