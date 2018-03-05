@@ -38,7 +38,7 @@ function displayImg(){
 //event handler so on click will do something.
 function clickHandler(event){
   displayImg();
-  BusProduct.totalCounter += 1;
+  BusProduct.totalCounter += 1;//adds to total clicks
   if(event.target === BusProduct.ulContainer){
     BusProduct.totalCounter -= 1;
     return alert('Please click on a product');
@@ -52,12 +52,10 @@ function clickHandler(event){
   }
   for(var i = 0; i < BusProduct.allProducts.length; i++){
     if(event.target.alt === BusProduct.allProducts[i].name){
-      BusProduct.allProducts[i].clicks += 1;
+      BusProduct.allProducts[i].clicks += 1;//adds when pic is clicked on
     }
   }
 }
-
-
 
 var clickArray = [];
 var labelArray = [];
@@ -113,8 +111,7 @@ function storeLocal(){
   localStorage.setItem('busProductLS', JSON.stringify(BusProduct.allProducts));
 }
 
-
-function updateToAllProducts(){
+function updateToAllProducts(){//checks Local storage and if no LS then makes the new array of instances.
   if(localStorage.busProductLS){
     var allProducts = JSON.parse(localStorage.getItem('busProductLS'));
     BusProduct.allProducts = allProducts;
@@ -143,6 +140,6 @@ function updateToAllProducts(){
 
   }
 }
-updateToAllProducts();
-displayImg();
+updateToAllProducts();//function to check LS and use or make instances
+displayImg();//function to make first 3 images on load.
 BusProduct.ulContainer.addEventListener('click', clickHandler);
